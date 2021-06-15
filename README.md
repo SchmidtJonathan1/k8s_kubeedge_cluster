@@ -1,4 +1,4 @@
-# kube_cluster
+# k8s_kubeedge_cluster
 Create Kubernetes Cluster + KubeEdge
 
 To run the ansible playbook use:
