@@ -1,0 +1,15 @@
+# /roles/kube_node/tasks/install_cluster_node.yml
+---
+# Configure kubernetes node
+- name: Join kubernetes cluster
+  shell: "{{ hostvars['primary1'].join_k8s_command }} >> node_joined.txt"
+  args:
+    chdir: $HOME
+    creates: node_joined.txt
+
+- name: Join kubeedge cloud side
+  shell: keadm join --cloudcore-ipport="{{ hostvars['primary1'].ansible_host }}":10000 --token="{{ hostvars['primary1'].join_kubeedge_command" >> keadm_join.txt
+  args:
+    chdir: "{{ path_kubeedge }}"
+    creates: keadm_join.txt
+...

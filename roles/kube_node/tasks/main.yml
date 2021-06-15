@@ -1,0 +1,4 @@
+# /roles/kube_node/tasks/main.yml
+---
+- include_tasks: install_cluster_node.yml
+...

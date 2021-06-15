@@ -1,0 +1,10 @@
+# /group_vars/all.yaml
+### Variable Parameter ###
+
+#kubernetes
+pod_network: "https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml"
+path_k8s: $HOME/.kube
+
+#kubeedge
+path_kubeedge: $HOME/kubeedge
+kubeedge_git: "https://github.com/kubeedge/kubeedge/releases/download/v1.7.1/keadm-v1.7.1-linux-amd64.tar.gz"

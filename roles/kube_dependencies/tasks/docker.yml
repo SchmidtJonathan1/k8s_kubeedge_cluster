@@ -1,0 +1,9 @@
+# /roles/kube_dependecies/tasks/docker.yml
+---
+# Set up docker
+- name: Enable docker service
+  ansible.builtin.service:
+    name: docker
+    enabled: yes
+    state: started
+...

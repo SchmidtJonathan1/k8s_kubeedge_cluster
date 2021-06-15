@@ -1,0 +1,49 @@
+# /roles/kube_dependecies/tasks/dependencies.yml
+---
+# Install dependencies
+- name: Add kubernetes apt-key
+  ansible.builtin.apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: present
+
+- name: Add kubernetes repo
+  ansible.builtin.apt_repository:
+    repo: deb http://apt.kubernetes.io/ kubernetes-xenial main
+    state: present
+    filename: "kubernetes"
+
+- name: Update cache
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: Install dependencies
+  ansible.builtin.apt:
+    name: "{{ item.name }}"
+    state: present
+  loop:
+    - name: docker.io
+    - name: apt-transport-https
+    - name: curl
+    - name: kubeadm
+    - name: kubelet
+
+- name: Install only on primary node
+  ansible.builtin.apt:
+    name: kubectl
+    state: present
+  when: ansible_default_ipv4.address == hostvars['primary1'].ansible_host
+
+# Notice:
+# Whole group {{ hostvars['host_group'].ansible_host }}
+# First entry of group {{ hostvars[groups['host_group'][0]].ansible_host }}
+
+- name: Create KubeEdge folder in home
+  ansible.builtin.file:
+    path: "{{ path_kubeedge }}"
+    state: directory
+
+- name: Download KubeEdge from Git
+  ansible.builtin.get_url:
+    dest: "{{ path_kubeedge }}"
+    url: "{{ kubeedge_git }}"
+...

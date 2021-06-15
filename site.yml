@@ -1,0 +1,29 @@
+# /site.yml
+---
+- name: Main YML for Kubernetes and KubeEdge cluster dependencies
+  hosts: kubernetes
+  become: yes
+  vars_files:
+    - ./group_vars/all.yml
+  roles:
+    - name: Kubernetes and KubeEdge dependencies
+      role: kube_dependencies
+
+- name: Confgiure cluster primary
+  hosts: primary
+  become: yes
+  vars_files:
+    - ./group_vars/all.yml
+  roles:
+    - name: Cluster primary
+      role: kube_primary
+
+- name: Confgiure cluster nodes
+  hosts: nodes
+  become: yes
+  vars_files:
+    - ./group_vars/all.yml
+  roles:
+    - name: Cluster node
+      role: kube_node
+...
