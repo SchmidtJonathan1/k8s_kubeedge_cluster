@@ -8,7 +8,7 @@
     creates: node_joined.txt
 
 - name: Join kubeedge cloud side
-  shell: keadm join --cloudcore-ipport="{{ hostvars['primary1'].ansible_host }}":10000 --token="{{ hostvars['primary1'].join_kubeedge_command" >> keadm_join.txt
+  shell: "{{ path_kubeedge }}/keadm-v1.7.1-linux-amd64/keadm/keadm join --cloudcore-ipport={{ hostvars['primary1'].ansible_host }}:10000 --token={{ hostvars['primary1'].join_kubeedge_command }} >> keadm_join.txt"
   args:
     chdir: "{{ path_kubeedge }}"
     creates: keadm_join.txt

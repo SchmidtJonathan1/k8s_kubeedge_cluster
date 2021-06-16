@@ -1,4 +1,4 @@
 # /roles/k8s/tasks/main.yml
 ---
-- include_tasks: install_cluster_primary.yml
+- import_tasks: install_cluster_primary.yml
 ...

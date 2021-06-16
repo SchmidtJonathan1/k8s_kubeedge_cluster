@@ -36,13 +36,16 @@
 
 # Configure KubeEdge
 - name: Run keadm
-  shell: keadm init >> kubeedge_initialized.txt
+  shell: "{{ path_kubeedge }}/keadm-v1.7.1-linux-amd64/keadm/keadm init >> kubeedge_initialized.txt"
   args:
     chdir: "{{ path_kubeedge }}"
     creates: kubeedge_initialized.txt
 
+- name: pkill cloudcore
+  shell: pkill cloudcore && nohup cloudcore > cloudcore.log 2>&1 &
+
 - name: Get kubeedge join command
-  shell: keadm gettoken
+  shell: "{{ path_kubeedge }}/keadm-v1.7.1-linux-amd64/keadm/keadm gettoken"
   register: join_kubeedge_command_raw
 
 - name: Set kubeedge join command

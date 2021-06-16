@@ -46,4 +46,10 @@
   ansible.builtin.get_url:
     dest: "{{ path_kubeedge }}"
     url: "{{ kubeedge_git }}"
+
+- name: Unarchive a file with extra options
+  ansible.builtin.unarchive:
+    src: "{{ path_kubeedge }}/keadm-v1.7.1-linux-amd64.tar.gz"
+    dest: "{{ path_kubeedge }}"
+    remote_src: yes
 ...
