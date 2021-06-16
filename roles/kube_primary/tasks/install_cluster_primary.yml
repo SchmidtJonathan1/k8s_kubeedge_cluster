@@ -35,20 +35,20 @@
     join_k8s_command: "{{ join_k8s_command_raw.stdout_lines[0] }}"
 
 # Configure KubeEdge
-- name: Run keadm
-  shell: "{{ path_kubeedge }}/keadm-v1.7.1-linux-amd64/keadm/keadm init >> kubeedge_initialized.txt"
-  args:
-    chdir: "{{ path_kubeedge }}"
-    creates: kubeedge_initialized.txt
+#- name: Run keadm
+#  shell: "{{ path_kubeedge }}/keadm-v1.7.1-linux-amd64/keadm/keadm init >> kubeedge_initialized.txt"
+#  args:
+#    chdir: "{{ path_kubeedge }}"
+#    creates: kubeedge_initialized.txt
 
-- name: pkill cloudcore
-  shell: pkill cloudcore && nohup cloudcore > cloudcore.log 2>&1 &
+#- name: pkill cloudcore
+#  shell: pkill cloudcore && nohup cloudcore > cloudcore.log 2>&1 &
 
-- name: Get kubeedge join command
-  shell: "{{ path_kubeedge }}/keadm-v1.7.1-linux-amd64/keadm/keadm gettoken"
-  register: join_kubeedge_command_raw
+#- name: Get kubeedge join command
+#  shell: "{{ path_kubeedge }}/keadm-v1.7.1-linux-amd64/keadm/keadm gettoken"
+#  register: join_kubeedge_command_raw
 
-- name: Set kubeedge join command
-  set_fact:
-    join_kubeedge_command: "{{ join_kubeedge_command_raw.stdout_lines[0] }}"
+#- name: Set kubeedge join command
+#  set_fact:
+#    join_kubeedge_command: "{{ join_kubeedge_command_raw.stdout_lines[0] }}"
 ...

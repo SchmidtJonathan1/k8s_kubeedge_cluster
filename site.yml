@@ -14,10 +14,10 @@
     - name: Cluster primary
       role: kube_primary
 
-- name: Confgiure cluster nodes
-  hosts: nodes
-  become: yes
-  roles:
-    - name: Cluster node
-      role: kube_node
+#- name: Confgiure cluster nodes
+#  hosts: nodes
+#  become: yes
+#  roles:
+#    - name: Cluster node
+#      role: kube_node
 ...

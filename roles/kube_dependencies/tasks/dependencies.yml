@@ -21,16 +21,18 @@
     name: "{{ item.name }}"
     state: present
   loop:
-    - name: docker.io
     - name: apt-transport-https
     - name: curl
-    - name: kubeadm
-    - name: kubelet
+    - name: docker.io
 
 - name: Install only on primary node
   ansible.builtin.apt:
-    name: kubectl
+    name: "{{ item.name }}"
     state: present
+  loop:
+    - name: kubeadm
+    - name: kubelet
+    - name: kubectl
   when: ansible_default_ipv4.address == hostvars['primary1'].ansible_host
 
 # Notice:
