@@ -1,6 +1,6 @@
 # /roles/kube_dependecies/tasks/dependencies.yml
 ---
-# Install dependencies
+# Set dependencies
 - name: Add kubernetes apt-key
   ansible.builtin.apt_key:
     url: https://packages.cloud.google.com/apt/doc/apt-key.gpg

@@ -18,3 +18,5 @@ To run the ansible playbook use:
 
 * Define your kubernetes pod image in group_vars/all.yml
 https://kubernetes.io/docs/concepts/cluster-administration/networking/
+
+* Without DHCP Server, edit hosts data with ip and nodename

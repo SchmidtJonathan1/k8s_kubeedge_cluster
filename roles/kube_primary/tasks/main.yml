@@ -1,4 +1,5 @@
 # /roles/k8s/tasks/main.yml
 ---
-- import_tasks: install_cluster_primary.yml
+- import_tasks: install_cluster_kubernetes.yml
+- import_tasks: install_kubeedge.yml
 ...

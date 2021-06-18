@@ -1,0 +1,45 @@
+# /roles/kube_primary/tasks/install_cluster_primary.yml
+---
+# Set prerequesits
+- name: Uncomment port=0 in yaml
+  ansible.builtin.replace:
+    path: "{{ item.path }}"
+    regexp: '^(.*)- --port=0(.*)$'
+    replace: '#- --port=0'
+  loop:
+    - path: /etc/kubernetes/manifests/kube-scheduler.yaml 
+    - path: /etc/kubernetes/manifests/kube-controller-manager.yaml
+
+- name: Disable taint in kubernetes
+  ansible.builtin.shell: "{{ item.name }}"
+  loop:
+    - name: kubectl taint nodes --all node-role.kubernetes.io/master:NoSchedule-
+    - name: systemctl restart kubelet.service
+
+# Configure KubeEdge
+- name: Run keadm
+  ansible.builtin.shell: "{{ path_kubeedge }}/keadm-v1.7.1-linux-amd64/keadm/keadm init --advertise-address={{ hostvars[inventory_hostname].ansible_host }} --kube-config=/root/.kube/config"
+
+# Create service cloudcore
+- name: Set link for service
+  ansible.builtin.file:
+    src: /etc/kubeedge/cloudcore.service
+    dest: /etc/systemd/system/cloudcore.service
+    state: link
+
+- name: Start service
+  ansible.builtin.shell: "{{ item.name }}"
+  loop: 
+    - name: systemctl daemon-reload
+    - name: systemctl enable cloudcore.service
+    - name: systemctl restart cloudcore.service
+
+# Kubeedge join token
+- name: Get kubeedge join command
+  ansible.builtin.shell: "{{ path_kubeedge }}/keadm-v1.7.1-linux-amd64/keadm/keadm gettoken"
+  register: join_kubeedge_command_raw
+
+- name: Set kubeedge join command
+  ansible.builtin.set_fact:
+    join_kubeedge_command: "{{ join_kubeedge_command_raw.stdout_lines[0] }}"
+...

@@ -1,0 +1,5 @@
+- name: Comment port=0 in yaml
+  ansible.builtin.replace:
+    path: /root/test.txt #"{{ item.path }}"
+    regexp: '^(.*)- --port=0(.*)$'
+    replace: '#- --port=0'
