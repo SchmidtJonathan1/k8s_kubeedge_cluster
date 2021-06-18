@@ -10,8 +10,8 @@
     - path: /etc/kubernetes/manifests/kube-scheduler.yaml 
     - path: /etc/kubernetes/manifests/kube-controller-manager.yaml
 
-#- name: Disable taint in kubernetes
-#  ansible.builtin.shell: kubectl taint nodes --all node-role.kubernetes.io/master:NoSchedule-
+- name: Disable taint in kubernetes
+  ansible.builtin.shell: kubectl taint nodes --all node-role.kubernetes.io/master:NoSchedule-
   
 - name: Restart kubelet service
   ansible.builtin.service:
