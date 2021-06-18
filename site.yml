@@ -4,7 +4,7 @@
   hosts: kubernetes
   become: yes
   roles:
-   - name: Kubernetes and KubeEdge dependencies
+    - name: Kubernetes and KubeEdge dependencies
       role: kube_dependencies
 
 - name: Confgiure cluster primary
