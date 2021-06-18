@@ -10,11 +10,13 @@
     - path: /etc/kubernetes/manifests/kube-scheduler.yaml 
     - path: /etc/kubernetes/manifests/kube-controller-manager.yaml
 
-- name: Disable taint in kubernetes
-  ansible.builtin.shell: "{{ item.name }}"
-  loop:
-    - name: kubectl taint nodes --all node-role.kubernetes.io/master:NoSchedule-
-    - name: systemctl restart kubelet.service
+#- name: Disable taint in kubernetes
+#  ansible.builtin.shell: kubectl taint nodes --all node-role.kubernetes.io/master:NoSchedule-
+  
+- name: Restart kubelet service
+  ansible.builtin.service:
+    name: kubelet.service
+    state: restarted
 
 # Configure KubeEdge
 - name: Run keadm
@@ -27,12 +29,14 @@
     dest: /etc/systemd/system/cloudcore.service
     state: link
 
-- name: Start service
-  ansible.builtin.shell: "{{ item.name }}"
-  loop: 
-    - name: systemctl daemon-reload
-    - name: systemctl enable cloudcore.service
-    - name: systemctl restart cloudcore.service
+- name: service
+  ansible.builtin.systemd:
+    daemon_reload: yes
+    name: cloudcore.service
+    state: restarted
+    enabled: yes
+
+- name: timeout
   wait_for:
     timeout: 20
 
