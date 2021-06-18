@@ -33,6 +33,8 @@
     - name: systemctl daemon-reload
     - name: systemctl enable cloudcore.service
     - name: systemctl restart cloudcore.service
+  wait_for:
+    timeout: 20
 
 # Kubeedge join token
 - name: Get kubeedge join command
