@@ -1,3 +1,4 @@
+
 # k8s_kubeedge_cluster for Ubuntu
 Create Kubernetes Cluster + KubeEdge for Ubuntu
 
@@ -8,15 +9,17 @@ To run the ansible playbook use:
 -K  = become root user
 -vv = verbose level two (debug mode)
 
-**Notes:**
-* Add your client hostname, username and userpassword to inventory.yml or use ssl certificate for ansible.
+Check your kubernetes cluster with **kubectl get nodes**, if it list your edge node device everything works.
 
-* To set up a lab enviroment, you need two++ virutal machines (VirtualBox, VMware ...)
+**Notes:**
+* Add your client hostname, username and user password to inventory.yml or use ssl certificate for ansible.
+
+* To set up a lab environment, you need two++ virtual machines (VirtualBox, VMware ...)
 [VM system requirements minimum:
 2 GB RAM
-2 CPU (depence on the enviroment)]
+2 CPU (depending on the environment)]
 
 * Define your kubernetes pod image in group_vars/all.yml
 https://kubernetes.io/docs/concepts/cluster-administration/networking/
 
-* Without DHCP Server, edit hosts data with ip and nodename
+* Without DHCP Server, edit hosts data with IP and node name
