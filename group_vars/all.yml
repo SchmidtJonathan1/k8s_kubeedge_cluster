@@ -7,4 +7,6 @@ path_k8s: $HOME/.kube
 
 #kubeedge
 path_kubeedge: $HOME/kubeedge
-kubeedge_git: "https://github.com/kubeedge/kubeedge/releases/download/v1.7.1/keadm-v1.7.1-linux-amd64.tar.gz"
+kubeedge_git_pc: "https://github.com/kubeedge/kubeedge/releases/download/v1.7.1/keadm-v1.7.1-linux-amd64.tar.gz"
+kubeedge_git_arm: "https://github.com/kubeedge/kubeedge/releases/download/v1.7.1/keadm-v1.7.1-linux-arm.tar.gz"
+kubeedge_git_arm64: "https://github.com/kubeedge/kubeedge/releases/download/v1.7.1/keadm-v1.7.1-linux-arm64.tar.gz"

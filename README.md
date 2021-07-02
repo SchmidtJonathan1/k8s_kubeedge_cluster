@@ -13,6 +13,7 @@ Check your kubernetes cluster with **kubectl get nodes**, if it list your edge n
 
 **Notes:**
 * Add your client hostname, username and user password to inventory.yml or use ssl certificate for ansible.
+Look at the cpu architecture (x64, arm or arm64)
 
 * To set up a lab environment, you need two++ virtual machines (VirtualBox, VMware ...)
 [VM system requirements minimum:

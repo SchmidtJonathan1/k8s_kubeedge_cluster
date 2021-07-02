@@ -44,14 +44,33 @@
     path: "{{ path_kubeedge }}"
     state: directory
 
-- name: Download KubeEdge from Git
+- name: Download KubeEdge from Git pc
   ansible.builtin.get_url:
     dest: "{{ path_kubeedge }}"
-    url: "{{ kubeedge_git }}"
+    url: "{{ kubeedge_git_pc }}"
+  when: "'pcgroup' in group_names"
 
-- name: Unarchive a file with extra options
+- name: Download KubeEdge from Git arm
+  ansible.builtin.get_url:
+    dest: "{{ path_kubeedge }}"
+    url: "{{ kubeedge_git_arm }}"
+  when: "'nodesARM' in group_names"
+
+- name: Download KubeEdge from Git arm64
+  ansible.builtin.get_url:
+    dest: "{{ path_kubeedge }}"
+    url: "{{ kubeedge_git_arm64 }}"
+  when: "'nodesARM64' in group_names"
+
+- name: Find KubeEdge zip
+  ansible.builtin.find:
+    paths: "{{ path_kubeedge }}"
+    patterns: "keadm-v1.7.1-linux-*.tar.gz"
+  register: find_result
+
+- name: Unarchive a file
   ansible.builtin.unarchive:
-    src: "{{ path_kubeedge }}/keadm-v1.7.1-linux-amd64.tar.gz"
+    src: "{{ find_result['files'][0]['path'] }}" 
     dest: "{{ path_kubeedge }}"
     remote_src: yes
 ...

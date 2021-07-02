@@ -1,6 +1,13 @@
 # /roles/kube_node/tasks/install_cluster_node.yml
 ---
 # Configure kubeedge nodes
+- name: Find KubeEdge path
+  ansible.builtin.find:
+    paths: "{{ path_kubeedge }}"
+    patterns: "keadm-v1.7.1-linux-*"
+    file_type: directory
+  register: find_result
+
 - name: Join kubeedge cloud side
-  ansible.builtin.shell: "{{ path_kubeedge }}/keadm-v1.7.1-linux-amd64/keadm/keadm join --cloudcore-ipport={{ hostvars['primary1'].ansible_host }}:10000 --token={{ hostvars['primary1'].join_kubeedge_command }}"
+  ansible.builtin.shell: "{{ find_result['files'][0]['path'] }}/keadm/keadm join --cloudcore-ipport={{ hostvars['primary1'].ansible_host }}:10000 --token={{ hostvars['primary1'].join_kubeedge_command }}"
 ...
