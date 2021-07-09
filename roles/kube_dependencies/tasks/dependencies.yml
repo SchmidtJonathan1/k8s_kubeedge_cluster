@@ -5,12 +5,14 @@
   ansible.builtin.apt_key:
     url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
     state: present
+  when: "'pcgroup' in group_names"
 
 - name: Add kubernetes repo
   ansible.builtin.apt_repository:
     repo: deb http://apt.kubernetes.io/ kubernetes-xenial main
     state: present
     filename: "kubernetes"
+  when: "'pcgroup' in group_names"
 
 - name: Update cache
   ansible.builtin.apt:
