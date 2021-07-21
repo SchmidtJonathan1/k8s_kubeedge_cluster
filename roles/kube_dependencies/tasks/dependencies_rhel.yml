@@ -1,0 +1,36 @@
+# /roles/kube_dependecies/tasks/dependencies_rhel.yml
+---
+# Set dependencies
+- name: Add Kubernetes repo CentOS
+  ansible.builtin.yum_repository:
+    name: Kubernetes
+    description: Kubernetes repo
+    baseurl: "{{ repo_url_centos }}"
+    enabled: yes
+    gpgcheck: yes
+    repo_gpgcheck: yes
+    gpgkey: "{{ repo_gpg_centos }}"
+  when: "ansible_default_ipv4.address == hostvars['primary1'].ansible_host"
+
+- name: Update cache centos
+  ansible.builtin.dnf:
+    update_cache: yes
+
+- name: Install dependencies on centos
+  ansible.builtin.dnf:
+    name:
+      - curl
+      - wget
+      - ca-certificates
+      - docker.io
+    state: present
+
+- name: Install only on primary node centos
+  ansible.builtin.dnf:
+    name:
+      - kubeadm
+      - kubelet
+      - kubectl
+    state: present
+  when: ansible_default_ipv4.address == hostvars['primary1'].ansible_host
+...

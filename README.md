@@ -1,6 +1,9 @@
 
-# k8s_kubeedge_cluster for Ubuntu
-Create Kubernetes Cluster + KubeEdge for Ubuntu and Raspberry OS
+# k8s_kubeedge_cluster
+Create Kubernetes Cluster + KubeEdge
+
+Kubernetes Cluster: RHEL, Ubuntu
+Kubeedge Edgenode: RHEL, Ubuntu, Raspberry
 
 To run the ansible playbook use:
 **ansible-playbook -i inventory.ini -K -vv site.yml**
@@ -24,3 +27,5 @@ Look at the cpu architecture (x64, arm or arm64)
 https://kubernetes.io/docs/concepts/cluster-administration/networking/
 
 * Without DHCP Server, edit hosts data with IP and node name
+
+* Only tested with Raspberry 4 and Raspios

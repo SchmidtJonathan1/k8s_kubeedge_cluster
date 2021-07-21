@@ -1,5 +1,12 @@
 # /group_vars/all.yaml
 ### Variable Parameter ###
+## CentOS Repo
+repo_url_centos: "https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64"
+repo_gpg_centos: "https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg"
+
+## Ubuntu Repo
+repo_url_ubuntu: "https://apt.kubernetes.io/ kubernetes-xenial main"
+repo_gpg_ubuntu: "https://packages.cloud.google.com/apt/doc/apt-key.gpg"
 
 #kubernetes
 pod_network: "https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml"

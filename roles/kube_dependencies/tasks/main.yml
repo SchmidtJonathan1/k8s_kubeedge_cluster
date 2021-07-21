@@ -1,5 +1,9 @@
 # /roles/kube_dependecies/tasks/main.yml
 ---
+- import_tasks: dependencies_ubuntu.yml
+  when: "ansible_facts['distribution'] == 'Ubuntu'"
+- import_tasks: dependencies_centos.yml
+  when: "ansible_facts['distribution'] == 'CentOS'"
 - import_tasks: dependencies.yml
 - import_tasks: docker.yml
 - import_tasks: swapoff.yml

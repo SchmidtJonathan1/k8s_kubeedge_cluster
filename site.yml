@@ -7,14 +7,14 @@
     - name: Kubernetes and KubeEdge dependencies
       role: kube_dependencies
 
-- name: Confgiure cluster primary
+- name: Configure cluster primary
   hosts: primary
   become: yes
   roles:
     - name: Cluster primary
       role: kube_primary
 
-- name: Confgiure cluster nodes
+- name: Configure cluster nodes
   hosts: nodes
   become: yes
   roles:
