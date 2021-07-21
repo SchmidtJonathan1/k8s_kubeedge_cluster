@@ -1,9 +1,8 @@
-
 # k8s_kubeedge_cluster
 Create Kubernetes Cluster + KubeEdge
 
-Kubernetes Cluster: RHEL, Ubuntu
-Kubeedge Edgenode: RHEL, Ubuntu, Raspberry
+Kubernetes Cluster: CentOS, Ubuntu
+Kubeedge Edgenode: CentOS, Ubuntu, Raspberry
 
 To run the ansible playbook use:
 **ansible-playbook -i inventory.ini -K -vv site.yml**
