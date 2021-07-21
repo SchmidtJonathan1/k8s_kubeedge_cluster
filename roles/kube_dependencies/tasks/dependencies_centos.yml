@@ -30,7 +30,9 @@
       - curl
       - wget
       - ca-certificates
-      - docker.io
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
     state: present
 
 - name: Install only on primary node centos
