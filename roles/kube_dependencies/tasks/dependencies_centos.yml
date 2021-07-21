@@ -1,10 +1,12 @@
 # /roles/kube_dependecies/tasks/dependencies_rhel.yml
 ---
 # Set dependencies
-- name: Install yum-utils
-  ansible.builtin.dnf:
-    name: yum-utils
-    state: present
+- name: Create download folder
+  ansible.builtin.file:
+    path: "{{ dest_path }}/rpm"
+    recurse: yes
+    state: directory
+    mode: "0755"
 
 - name: Add kubernetes repo CentOS
   ansible.builtin.yum_repository:
@@ -17,9 +19,6 @@
     gpgkey: "{{ repo_gpg_centos }}"
   when: "ansible_default_ipv4.address == hostvars['primary1'].ansible_host"
 
-- name: Add docker repo CentOS
-  shell: "yum-config-manager --add-repo {{ repo_git_centos }}" 
-
 - name: Update cache centos
   ansible.builtin.dnf:
     update_cache: yes
@@ -30,10 +29,40 @@
       - curl
       - wget
       - ca-certificates
-      - docker-ce
-      - docker-ce-cli
-      - containerd.io
     state: present
+
+- name: Get files
+  ansible.builtin.get_url:
+    url: "{{ item }}"
+    dest: "{{ dest_path }}/rpm"
+  loop:
+    - "{{ containerd }}"
+    - "{{ docker_ce }}"
+    - "{{ docker_ce_cli }}"
+    - "{{ docker_ce_rootless_extras }}"
+    - "{{ docker_scan_plugin }}"
+  register: download_result
+
+- name: Register install files
+  ansible.builtin.find:
+    paths: "{{ dest_path }}/rpm"
+    patterns: "*.rpm"
+  register: install_files
+
+- name: Setting install list
+  ansible.builtin.set_fact:
+    install_list: "{{ install_files.files | map(attribute='path') | list }}"
+
+- name: install docker
+  ansible.builtin.dnf:
+    name: "{{ install_list }}"
+    disable_gpg_check: yes
+    state: present
+  register: install_result
+
+- name: check docker
+  debug:
+    msg: install_result
 
 - name: Install only on primary node centos
   ansible.builtin.dnf:
