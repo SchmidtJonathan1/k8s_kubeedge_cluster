@@ -1,7 +1,12 @@
 # /roles/kube_dependecies/tasks/dependencies_rhel.yml
 ---
 # Set dependencies
-- name: Add Kubernetes repo CentOS
+- name: Install yum-utils
+  ansible.builtin.dnf:
+    name: yum-utils
+    state: present
+
+- name: Add kubernetes repo CentOS
   ansible.builtin.yum_repository:
     name: Kubernetes
     description: Kubernetes repo
@@ -11,6 +16,9 @@
     repo_gpgcheck: yes
     gpgkey: "{{ repo_gpg_centos }}"
   when: "ansible_default_ipv4.address == hostvars['primary1'].ansible_host"
+
+- name: Add docker repo CentOS
+  shell: "yum-config-manager --add-repo {{ repo_git_centos }}" 
 
 - name: Update cache centos
   ansible.builtin.dnf:

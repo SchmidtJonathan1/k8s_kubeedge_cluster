@@ -3,6 +3,7 @@
 ## CentOS Repo
 repo_url_centos: "https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64"
 repo_gpg_centos: "https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg"
+repo_git_centos: "https://download.docker.com/linux/centos/docker-ce.repo"
 
 ## Ubuntu Repo
 repo_url_ubuntu: "https://apt.kubernetes.io/ kubernetes-xenial main"
