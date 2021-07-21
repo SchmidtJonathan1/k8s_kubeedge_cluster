@@ -1,24 +1,24 @@
 # /roles/kube_dependecies/tasks/dependencies_ubuntu.yml
 ---
 # Set dependencies
-- name: Add kubernetes apt-key
+- name: Add kubernetes apt-key Ubuntu
   ansible.builtin.apt_key:
     url: "{{ repo_gpg_ubuntu }}"
     state: present
   when: "ansible_default_ipv4.address == hostvars['primary1'].ansible_host"
 
-- name: Add kubernetes repo ubuntu
+- name: Add kubernetes repo Ubuntu
   ansible.builtin.apt_repository:
     repo: "deb {{ repo_url_ubuntu }}" 
     state: present
     filename: "kubernetes"
   when: "ansible_default_ipv4.address == hostvars['primary1'].ansible_host"
 
-- name: Update cache ubuntu
+- name: Update cache Ubuntu
   ansible.builtin.apt:
     update_cache: true
 
-- name: Install dependencies ubuntu
+- name: Install dependencies Ubuntu
   ansible.builtin.apt:
     pkg:
       - apt-transport-https
@@ -28,12 +28,12 @@
       - docker.io
     state: present
     
-- name: Install only on primary node ubuntu
+- name: Install only on primary node Ubuntu
   ansible.builtin.apt:
     pkg: 
       - kubeadm
       - kubelet
       - kubectl
     state: present
-  when: ansible_default_ipv4.address == hostvars['primary1'].ansible_host
+  when: "ansible_default_ipv4.address == hostvars['primary1'].ansible_host"
 ...
