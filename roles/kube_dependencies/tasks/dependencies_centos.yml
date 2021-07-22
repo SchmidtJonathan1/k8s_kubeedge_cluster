@@ -12,6 +12,10 @@
     gpgkey: "{{ repo_gpg_centos }}"
   when: "ansible_default_ipv4.address == hostvars['primary1'].ansible_host"
 
+- name: Add docker repo CentOS
+  ansible.builtin.command:
+    cmd: "dnf config-manager --add-repo={{ repo_docker_centos }}"
+
 - name: Update cache CentOS
   ansible.builtin.dnf:
     update_cache: yes
@@ -22,47 +26,10 @@
       - curl
       - wget
       - ca-certificates
+      - docker-ce 
+      - docker-ce-cli 
+      - containerd.io
     state: present
-
-- name: Create download folder CentOS
-  ansible.builtin.file:
-    path: "{{ dest_path }}/rpm"
-    recurse: yes
-    state: directory
-    mode: "0755"
-
-- name: Get docker files CentOS
-  ansible.builtin.get_url:
-    url: "{{ item }}"
-    dest: "{{ dest_path }}/rpm"
-  loop:
-    - "{{ containerd }}"
-    - "{{ docker_ce }}"
-    - "{{ docker_ce_cli }}"
-    - "{{ docker_ce_rootless_extras }}"
-    - "{{ docker_scan_plugin }}"
-  register: download_result
-
-- name: Register docker install files CentOS
-  ansible.builtin.find:
-    paths: "{{ dest_path }}/rpm"
-    patterns: "*.rpm"
-  register: install_files
-
-- name: Setting install list CentOS
-  ansible.builtin.set_fact:
-    install_list: "{{ install_files.files | map(attribute='path') | list }}"
-
-- name: install docker CentOS
-  ansible.builtin.dnf:
-    name: "{{ install_list }}"
-    disable_gpg_check: yes
-    state: present
-  register: install_result
-
-- name: check docker CentOS
-  debug:
-    msg: install_result
 
 - name: Install only on primary node CentOS
   ansible.builtin.dnf:
