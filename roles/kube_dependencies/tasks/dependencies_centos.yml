@@ -22,21 +22,23 @@
 
 - name: Install dependencies on CentOS
   ansible.builtin.dnf:
-    name:
-      - curl
-      - wget
-      - ca-certificates
-      - docker-ce 
-      - docker-ce-cli 
-      - containerd.io
+    name: "{{ item.name }}"
     state: present
+  loop:
+    - name: curl
+    - name: wget
+    - name: ca-certificates
+    - name: docker-ce 
+    - name: docker-ce-cli 
+    - name: containerd.io
 
 - name: Install only on primary node CentOS
   ansible.builtin.dnf:
-    name:
-      - kubeadm
-      - kubelet
-      - kubectl
+    name: "{{ item.name }}"
     state: present
+  loop:
+    - name: kubeadm
+    - name: kubelet
+    - name: kubectl
   when: ansible_default_ipv4.address == hostvars['primary1'].ansible_host
 ...

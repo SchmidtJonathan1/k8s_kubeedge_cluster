@@ -20,20 +20,22 @@
 
 - name: Install dependencies Ubuntu
   ansible.builtin.apt:
-    pkg:
-      - apt-transport-https
-      - curl
-      - wget
-      - ca-certificates
-      - docker.io
+    name: "{{ item.name }}"
     state: present
+  loop:
+    - name: apt-transport-https
+    - name: curl
+    - name: wget
+    - name: ca-certificates
+    - name: docker.io
     
 - name: Install only on primary node Ubuntu
   ansible.builtin.apt:
-    pkg: 
-      - kubeadm
-      - kubelet
-      - kubectl
+    name: "{{ item.name }}" 
     state: present
+  loop:
+   - name: kubeadm
+   - name: kubelet
+   - name: kubectl
   when: "ansible_default_ipv4.address == hostvars['primary1'].ansible_host"
 ...
