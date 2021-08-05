@@ -1,6 +1,8 @@
 # k8s_kubeedge_cluster
 Create Kubernetes Cluster + KubeEdge
 
+**IMPORTANT KubeEdge will not installed with Kubernetes v 1.22**
+
 Kubernetes Cluster: CentOS, Ubuntu
 Kubeedge Edgenode: CentOS, Ubuntu, Raspberry
 

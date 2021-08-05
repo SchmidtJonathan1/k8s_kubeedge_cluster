@@ -1,0 +1,29 @@
+# /roles/k8s/tasks/change_systemd_docker.yml
+---
+# Change systemd cgroupfs docker
+- name: make dir
+  ansible.builtin.file:
+    path: "/etc/docker/"
+    state: directory
+    mode: '0755'
+
+- name: add systemd
+  ansible.builtin.shell:
+    cmd: |
+      cat <<EOF | sudo tee /etc/docker/daemon.json
+      {
+        "exec-opts": ["native.cgroupdriver=systemd"],
+        "log-driver": "json-file",
+        "log-opts": {
+        "max-size": "100m"
+       },
+       "storage-driver": "overlay2"
+      }
+      EOF
+
+- name: Daemon reload
+  ansible.builtin.systemd:
+    daemon_reload: yes
+    state: restarted
+    name: docker
+...
